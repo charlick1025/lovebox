@@ -114,18 +114,69 @@ button{
 
 </div>
 
-<script>
+<script type="module">
 
-function sendMessage(){
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-    document.getElementById("status").innerHTML =
+import {
 
-    "Firebase not connected yet";
+  getDatabase,
 
-}
+  ref,
+
+  set
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCVe6dheTmL-ERnt2DkXVaD_oBzGXXMECs",
+
+  authDomain: "lovebox-e57dc.firebaseapp.com",
+
+  databaseURL: "https://lovebox-e57dc-default-rtdb.firebaseio.com",
+
+  projectId: "lovebox-e57dc",
+
+  storageBucket: "lovebox-e57dc.firebasestorage.app",
+
+  messagingSenderId: "913870168307",
+
+  appId: "1:913870168307:web:d012bad0e84b765c715786"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+window.sendMessage = function() {
+
+  const msg = document.getElementById("message").value;
+
+  set(ref(db, "message"), msg)
+
+    .then(() => {
+
+      document.getElementById("status").innerHTML =
+
+      "Message sent ❤️";
+
+      document.getElementById("message").value = "";
+
+    })
+
+    .catch((error) => {
+
+      document.getElementById("status").innerHTML =
+
+      error;
+
+    });
+
+};
 
 </script>
-
 </body>
 
 </html>
