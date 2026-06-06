@@ -8,21 +8,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Lovebox🩷</title>
+<title>Our LoveBox ❤️</title>
 
-    <style>
+<style>
 
 body{
-    input[type="checkbox"]{
-
-    width:30px;
-
-    height:30px;
-
-    cursor:pointer;
-
-}
-
 
     background:#ffb6c1;
 
@@ -64,6 +54,12 @@ h1{
 
 }
 
+h3{
+
+    color:#333;
+
+}
+
 button{
 
     margin-top:15px;
@@ -86,6 +82,14 @@ button{
 
 }
 
+#lightBtn{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
 input[type="range"]{
 
     width:100%;
@@ -105,11 +109,14 @@ input[type="range"]{
 </style>
 
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>🩷 Our LoveBox 🩷</h1>
-        <h3>💡 Night Light</h3>
+<div class="container">
+
+<h1>❤️ Our LoveBox ❤️</h1>
+
+<h3>💡 COB Light</h3>
 
 <button id="lightBtn" onclick="toggleLight()">
 
@@ -117,31 +124,37 @@ input[type="range"]{
 
 </button>
 
-    <br><br>
+<h3>☀️ Brightness</h3>
 
-    <input type="checkbox"
+<input
 
-           id="light"
+type="range"
 
-           onchange="updateLabel()">
+min="0"
 
-</div>
-<h3>🔆 Brightness</h3>
+max="255"
 
-<input type="range" min="0" max="255" value="180" id="brightness">
+value="130"
+
+id="brightness">
+
 <button onclick="updateLight()">
 
 Apply ❤️
 
 </button>
+
 <button onclick="missHim()" style="background:#ff7aa2;">
 
 🥺 Touch if you miss him
 
 </button>
+
 <p id="status"></p>
-    </div>
-    <script type="module">
+
+</div>
+
+<script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -177,60 +190,86 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 
-window.updateLight = function() {
+let lightState = false;
 
-  update(ref(db, "/"), {
+window.toggleLight = function(){
 
-    light: document.getElementById("light").checked,
+    lightState = !lightState;
 
-    brightness: parseInt(document.getElementById("brightness").value)
+    const btn = document.getElementById("lightBtn");
 
-  })
+    if(lightState){
 
-  .then(() => {
+        btn.innerHTML = "🟢 ON";
 
-    document.getElementById("status").innerHTML =
+    }else{
 
-    "LoveBox updated ❤️";
+        btn.innerHTML = "🔴 OFF";
 
-  })
-
-  .catch((error) => {
-
-    document.getElementById("status").innerHTML =
-
-    error;
-
-  });
+    }
 
 };
 
-window.missHim = function() {
+window.updateLight = function(){
 
-  update(ref(db, "/"), {
+    update(ref(db,"/"),{
 
-    miss_him: true
+        light: lightState,
 
-  })
+        brightness: parseInt(
 
-  .then(() => {
+            document.getElementById("brightness").value
 
-    document.getElementById("status").innerHTML =
+        )
 
-    "A little signal was sent ❤️";
+    })
 
-  })
+    .then(()=>{
 
-  .catch((error) => {
+        document.getElementById("status").innerHTML =
 
-    document.getElementById("status").innerHTML =
+        "LoveBox updated ❤️";
 
-    error;
+    })
 
-  });
+    .catch((error)=>{
+
+        document.getElementById("status").innerHTML =
+
+        error;
+
+    });
+
+};
+
+window.missHim = function(){
+
+    update(ref(db,"/"),{
+
+        miss_him:true
+
+    })
+
+    .then(()=>{
+
+        document.getElementById("status").innerHTML =
+
+        "A little signal was sent ❤️";
+
+    })
+
+    .catch((error)=>{
+
+        document.getElementById("status").innerHTML =
+
+        error;
+
+    });
 
 };
 
 </script>
+
 </body>
-</
+
+</html>
