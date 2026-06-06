@@ -252,28 +252,61 @@ window.sendAll = function(){
 
     document.getElementById("message").value;
 
-    const queueId = Date.now();
+    const updates = {
 
-update(ref(db,"/"),{
+        light: lightState,
 
-    message: msg,
+        brightness: parseInt(
 
-    [`queue/${queueId}/type`] : "message",
+            document.getElementById("brightness").value
 
-    [`queue/${queueId}/content`] : msg,
+        )
 
-    [`queue/${queueId}/timestamp`] : queueId,
+    };
 
-    light: lightState,
+    if(msg.trim() !== ""){
 
-    brightness: parseInt(
+        const queueId = Date.now();
 
-        document.getElementById("brightness").value
+        updates.message = msg;
 
-    )
+        updates[`queue/${queueId}/type`] =
 
-})
+        "message";
+
+        updates[`queue/${queueId}/content`] =
+
+        msg;
+
+        updates[`queue/${queueId}/timestamp`] =
+
+        queueId;
+
+    }
+
+    update(ref(db,"/"), updates)
+
     .then(()=>{
+
+        document.getElementById("status").innerHTML =
+
+        "LoveBox updated ❤️";
+
+        document.getElementById("message").value =
+
+        "";
+
+    })
+
+    .catch((error)=>{
+
+        document.getElementById("status").innerHTML =
+
+        error;
+
+    });
+
+};    .then(()=>{
 
         document.getElementById("status").innerHTML =
 
