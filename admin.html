@@ -252,7 +252,17 @@ window.sendAll = function(){
 
     document.getElementById("message").value;
 
+    const id = Date.now();
+
     const updates = {
+
+        message: msg,
+
+        [`queue/${id}/type`]: "message",
+
+        [`queue/${id}/content`]: msg,
+
+        [`queue/${id}/timestamp`]: id,
 
         light: lightState,
 
@@ -263,6 +273,26 @@ window.sendAll = function(){
         )
 
     };
+
+    update(ref(db,"/"), updates)
+
+    .then(()=>{
+
+        document.getElementById("status").innerHTML =
+
+        "LoveBox updated ❤️";
+
+    })
+
+    .catch((error)=>{
+
+        document.getElementById("status").innerHTML =
+
+        error;
+
+    });
+
+};
 
     if(msg.trim() !== ""){
 
