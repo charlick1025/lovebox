@@ -109,9 +109,21 @@ input[type="range"]{
 
     <div class="container">
         <h1>🩷 Our LoveBox 🩷</h1>
-        <h3>💡 Night Light</h3>
+        <h3>💡 COB Light</h3>
 
-<input type="checkbox" id="light">
+<div style="margin:15px 0;">
+
+    <span id="lightLabel">OFF</span>
+
+    <br><br>
+
+    <input type="checkbox"
+
+           id="light"
+
+           onchange="updateLabel()">
+
+</div>
 <h3>🔆 Brightness</h3>
 
 <input type="range" min="0" max="255" value="180" id="brightness">
