@@ -8,7 +8,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LoveBox ❤️</title>
+<title>LoveBox Admin ❤️</title>
 
 <style>
 
@@ -40,7 +40,7 @@ body{
 
     width:90%;
 
-    max-width:400px;
+    max-width:450px;
 
     text-align:center;
 
@@ -58,13 +58,15 @@ textarea{
 
     width:100%;
 
-    height:120px;
+    height:150px;
 
     border-radius:10px;
 
     padding:10px;
 
     font-size:16px;
+
+    resize:none;
 
 }
 
@@ -90,6 +92,16 @@ button{
 
 }
 
+#status{
+
+    margin-top:15px;
+
+    color:#ff4081;
+
+    font-weight:bold;
+
+}
+
 </style>
 
 </head>
@@ -98,19 +110,23 @@ button{
 
 <div class="container">
 
-    <h1>❤️ LoveBox ❤️</h1>
+<h1>❤️ LoveBox Admin ❤️</h1>
 
-    <textarea id="message"
+<textarea
 
-    placeholder="Type your message..."></textarea>
+id="message"
 
-    <button onclick="sendMessage()">
+placeholder="Type your message...">
 
-        SEND 💌
+</textarea>
 
-    </button>
+<button onclick="sendMessage()">
 
-    <p id="status"></p>
+💌 Send Message
+
+</button>
+
+<p id="status"></p>
 
 </div>
 
@@ -150,33 +166,36 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 
-window.sendMessage = function() {
+window.sendMessage = function(){
 
-  const msg = document.getElementById("message").value;
+    const msg =
 
-  set(ref(db, "message"), msg)
+    document.getElementById("message").value;
 
-    .then(() => {
+    set(ref(db,"message"),msg)
 
-      document.getElementById("status").innerHTML =
+    .then(()=>{
 
-      "Message sent ❤️";
+        document.getElementById("status").innerHTML =
 
-      document.getElementById("message").value = "";
+        "Message sent ❤️";
+
+        document.getElementById("message").value = "";
 
     })
 
-    .catch((error) => {
+    .catch((error)=>{
 
-      document.getElementById("status").innerHTML =
+        document.getElementById("status").innerHTML =
 
-      error;
+        error;
 
     });
 
 };
 
 </script>
+
 </body>
 
 </html>
