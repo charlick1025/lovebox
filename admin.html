@@ -252,20 +252,27 @@ window.sendAll = function(){
 
     document.getElementById("message").value;
 
-    update(ref(db,"/"),{
+    const queueId = Date.now();
 
-        message: msg,
+update(ref(db,"/"),{
 
-        light: lightState,
+    message: msg,
 
-        brightness: parseInt(
+    [`queue/${queueId}/type`] : "message",
 
-            document.getElementById("brightness").value
+    [`queue/${queueId}/content`] : msg,
 
-        )
+    [`queue/${queueId}/timestamp`] : queueId,
 
-    })
+    light: lightState,
 
+    brightness: parseInt(
+
+        document.getElementById("brightness").value
+
+    )
+
+})
     .then(()=>{
 
         document.getElementById("status").innerHTML =
