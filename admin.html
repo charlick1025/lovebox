@@ -196,7 +196,9 @@ id="brightness">
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 
@@ -206,7 +208,9 @@ import {
 
   update
 
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+}
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
 
@@ -214,15 +218,23 @@ const firebaseConfig = {
 
   authDomain: "lovebox-e57dc.firebaseapp.com",
 
-  databaseURL: "https://lovebox-e57dc-default-rtdb.firebaseio.com",
+  databaseURL:
+
+  "https://lovebox-e57dc-default-rtdb.firebaseio.com",
 
   projectId: "lovebox-e57dc",
 
-  storageBucket: "lovebox-e57dc.firebasestorage.app",
+  storageBucket:
 
-  messagingSenderId: "913870168307",
+  "lovebox-e57dc.firebasestorage.app",
 
-  appId: "1:913870168307:web:d012bad0e84b765c715786"
+  messagingSenderId:
+
+  "913870168307",
+
+  appId:
+
+  "1:913870168307:web:d012bad0e84b765c715786"
 
 };
 
@@ -234,123 +246,81 @@ let lightState = false;
 
 window.toggleLight = function(){
 
-    lightState = !lightState;
+  lightState = !lightState;
 
-    const btn =
+  const btn =
 
-    document.getElementById("lightBtn");
+  document.getElementById("lightBtn");
 
-    btn.innerHTML =
+  btn.innerHTML =
 
-    lightState ? "🟢 ON" : "🔴 OFF";
+  lightState ? "🟢 ON" : "🔴 OFF";
 
 };
 
 window.sendAll = function(){
 
-    const msg =
+  const msg =
 
-    document.getElementById("message").value;
+  document.getElementById("message").value;
 
-    const id = Date.now();
+  const id = Date.now();
 
-    const updates = {
+  const updates = {
 
-        message: msg,
+    message: msg,
 
-        [`queue/${id}/type`]: "message",
+    [`queue/${id}/type`]:
 
-        [`queue/${id}/content`]: msg,
+    "message",
 
-        [`queue/${id}/timestamp`]: id,
+    [`queue/${id}/content`]:
 
-        light: lightState,
+    msg,
 
-        brightness: parseInt(
+    [`queue/${id}/timestamp`]:
 
-            document.getElementById("brightness").value
+    id,
 
-        )
+    light: lightState,
 
-    };
+    brightness: parseInt(
 
-    update(ref(db,"/"), updates)
+      document.getElementById(
 
-    .then(()=>{
+        "brightness"
 
-        document.getElementById("status").innerHTML =
+      ).value
 
-        "LoveBox updated ❤️";
+    )
 
-    })
+  };
 
-    .catch((error)=>{
+  update(ref(db,"/"), updates)
 
-        document.getElementById("status").innerHTML =
+  .then(() => {
 
-        error;
+    document.getElementById(
 
-    });
+      "status"
 
-};
+    ).innerHTML =
 
-    if(msg.trim() !== ""){
+    "LoveBox updated ❤️";
 
-        const queueId = Date.now();
+  })
 
-        updates.message = msg;
+  .catch((error) => {
 
-        updates[`queue/${queueId}/type`] =
+    document.getElementById(
 
-        "message";
+      "status"
 
-        updates[`queue/${queueId}/content`] =
+    ).innerHTML =
 
-        msg;
+    error;
 
-        updates[`queue/${queueId}/timestamp`] =
-
-        queueId;
-
-    }
-
-    update(ref(db,"/"), updates)
-
-    .then(()=>{
-
-        document.getElementById("status").innerHTML =
-
-        "LoveBox updated ❤️";
-
-        document.getElementById("message").value =
-
-        "";
-
-    })
-
-    .catch((error)=>{
-
-        document.getElementById("status").innerHTML =
-
-        error;
-
-    });
-
-};    .then(()=>{
-
-        document.getElementById("status").innerHTML =
-
-        "LoveBox updated ❤️";
-
-    })
-
-    .catch((error)=>{
-
-        document.getElementById("status").innerHTML =
-
-        error;
-
-    });
+  });
 
 };
 
