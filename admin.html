@@ -54,11 +54,17 @@ h1{
 
 }
 
+h3{
+
+    color:#333;
+
+}
+
 textarea{
 
     width:100%;
 
-    height:150px;
+    height:120px;
 
     border-radius:10px;
 
@@ -92,6 +98,20 @@ button{
 
 }
 
+#lightBtn{
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+input[type="range"]{
+
+    width:100%;
+
+}
+
 #status{
 
     margin-top:15px;
@@ -112,17 +132,41 @@ button{
 
 <h1>❤️ LoveBox Admin ❤️</h1>
 
+<h3>💌 Message</h3>
+
 <textarea
 
 id="message"
 
-placeholder="Type your message...">
+placeholder="Type your message here...">
 
 </textarea>
 
-<button onclick="sendMessage()">
+<h3>💡 Night Light</h3>
 
-💌 Send Message
+<button id="lightBtn" onclick="toggleLight()">
+
+🔴 OFF
+
+</button>
+
+<h3>☀️ Brightness</h3>
+
+<input
+
+type="range"
+
+min="0"
+
+max="255"
+
+value="130"
+
+id="brightness">
+
+<button onclick="sendAll()">
+
+📤 Send Update
 
 </button>
 
@@ -140,7 +184,7 @@ import {
 
   ref,
 
-  set
+  update
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -166,21 +210,47 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 
-window.sendMessage = function(){
+let lightState = false;
+
+window.toggleLight = function(){
+
+    lightState = !lightState;
+
+    const btn =
+
+    document.getElementById("lightBtn");
+
+    btn.innerHTML =
+
+    lightState ? "🟢 ON" : "🔴 OFF";
+
+};
+
+window.sendAll = function(){
 
     const msg =
 
     document.getElementById("message").value;
 
-    set(ref(db,"message"),msg)
+    update(ref(db,"/"),{
+
+        message: msg,
+
+        light: lightState,
+
+        brightness: parseInt(
+
+            document.getElementById("brightness").value
+
+        )
+
+    })
 
     .then(()=>{
 
         document.getElementById("status").innerHTML =
 
-        "Message sent ❤️";
-
-        document.getElementById("message").value = "";
+        "LoveBox updated ❤️";
 
     })
 
