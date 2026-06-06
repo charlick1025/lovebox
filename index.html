@@ -8,9 +8,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>LoveBox ❤️</title>
+<title>My Lovebox🩷</title>
 
-<style>
+    <style>
 
 body{
 
@@ -54,20 +54,6 @@ h1{
 
 }
 
-textarea{
-
-    width:100%;
-
-    height:120px;
-
-    border-radius:10px;
-
-    padding:10px;
-
-    font-size:16px;
-
-}
-
 button{
 
     margin-top:15px;
@@ -90,31 +76,48 @@ button{
 
 }
 
+input[type="range"]{
+
+    width:100%;
+
+}
+
+#status{
+
+    margin-top:15px;
+
+    color:#ff4081;
+
+    font-weight:bold;
+
+}
+
 </style>
 
 </head>
-
 <body>
 
-<div class="container">
+    <div class="container">
+        <h1>🩷 Our LoveBox 🩷</h1>
+        <h3>💡 COB Light</h3>
 
-    <h1>❤️ LoveBox ❤️</h1>
+<input type="checkbox" id="light">
+<h3>🔆 Brightness</h3>
 
-    <textarea id="message"
+<input type="range" min="0" max="255" value="180" id="brightness">
+<button onclick="updateLight()">
 
-    placeholder="Type your message..."></textarea>
+Apply ❤️
 
-    <button onclick="sendMessage()">
+</button>
+<button onclick="missHim()" style="background:#ff7aa2;">
 
-        SEND 💌
+🥺 Touch if you miss him
 
-    </button>
-
-    <p id="status"></p>
-
-</div>
-
-<script type="module">
+</button>
+<p id="status"></p>
+    </div>
+    <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
@@ -124,7 +127,7 @@ import {
 
   ref,
 
-  set
+  update
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -150,33 +153,60 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 
-window.sendMessage = function() {
+window.updateLight = function() {
 
-  const msg = document.getElementById("message").value;
+  update(ref(db, "/"), {
 
-  set(ref(db, "message"), msg)
+    light: document.getElementById("light").checked,
 
-    .then(() => {
+    brightness: parseInt(document.getElementById("brightness").value)
 
-      document.getElementById("status").innerHTML =
+  })
 
-      "Message sent ❤️";
+  .then(() => {
 
-      document.getElementById("message").value = "";
+    document.getElementById("status").innerHTML =
 
-    })
+    "LoveBox updated ❤️";
 
-    .catch((error) => {
+  })
 
-      document.getElementById("status").innerHTML =
+  .catch((error) => {
 
-      error;
+    document.getElementById("status").innerHTML =
 
-    });
+    error;
+
+  });
+
+};
+
+window.missHim = function() {
+
+  update(ref(db, "/"), {
+
+    miss_him: true
+
+  })
+
+  .then(() => {
+
+    document.getElementById("status").innerHTML =
+
+    "A little signal was sent ❤️";
+
+  })
+
+  .catch((error) => {
+
+    document.getElementById("status").innerHTML =
+
+    error;
+
+  });
 
 };
 
 </script>
 </body>
-
-</html>
+</
